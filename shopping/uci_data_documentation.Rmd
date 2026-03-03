@@ -48,23 +48,98 @@ The original data come from the UCI Machine Learning Repository (Online Shoppers
 
 The following datasets are covered here:
 
+- **Final data (analysis-ready)**: `data/final_data/shopping_data_final.csv`
 - **Raw UCI data**: `data/raw_data/uci_shopping.csv`
 - **Preprocessed UCI data**: `data/intermediate_data/01_uci_preprocessed.csv`
-- **Uniformly censored UCI data**: `data/intermediate_data/02_uci_uniform_censor.csv`
-- **Randomly censored UCI data**: `data/intermediate_data/03_uci_random_censor.csv`
+- **Randomly censored UCI data**: `data/intermediate_data/02_uci_random_censor.csv`
 
 The code that creates these datasets lives in the `shopping/code` folder:
 
 - `00_uci_EDA.Rmd`
 - `01_uci_data_preprocessing.R`
-- `02_uci_censor_uniform_time.R`
-- `03_uci_censor_random_time.R`
+- `02_uci_censor_random_time.R`
 
-Below, we first describe the variables in the **raw** UCI dataset and then explain how each intermediate dataset is constructed, including the key code used.
+Below, we describe the **final** dataset and the **relationship between datasets and code files**; detailed descriptions of the individual datasets (raw, preprocessed, and randomly censored) are in the **Appendix**.
 
 ---
 
-## 1. Raw UCI dataset: `uci_shopping.csv`
+## 1. Final dataset: `shopping_data_final.csv`
+
+**File path**: `shopping/data/final_data/shopping_data_final.csv`  
+**Generating code**: `shopping/code/02_uci_censor_random_time.R`
+
+This is the **analysis-ready** dataset produced by the pipeline. It has the same structure and content as the randomly censored intermediate file `02_uci_random_censor.csv`: preprocessed UCI sessions with row-specific random censoring applied to `TotalDuration`, plus the censoring variables `TimeThreshold`, `CensorTime`, and `Censor`. The final file is written to `data/final_data/` for use in downstream analysis and reporting.
+
+### Variable descriptions
+
+The tables below describe every variable in the final dataset. Continuous and count variables are listed first; categorical variables follow.
+
+```{r final_data_variable_tables, echo = FALSE}
+final_continuous <- tibble::tribble(
+  ~Variable,       ~Description,
+  "Administrative",   "Number of pages visited that are related to account management (e.g., account settings, order history).",
+  "Informational",    "Number of informational pages visited (e.g., pages about the company, contact details, FAQs).",
+  "ProductRelated",   "Number of product-related pages visited (e.g., product listings, product detail pages, cart pages).",
+  "BounceRates",      "Average bounce rate of the visited pages in the session; roughly 1 - Engagement Rate.",
+  "ExitRates",        "Average exit rate of the visited pages; approximates (Number of Exits / Number of Page Views) x 100 over pages in the session.",
+  "PageValues",       "Average page value of the visited pages; combines total revenue and goal value per unique page view (Google Analytics definitions).",
+  "SpecialDay",       "Continuous measure of closeness of the visit date to a special day (e.g., Valentine's Day, Mother's Day); higher values indicate visits closer to the special day.",
+  "TotalDuration",    "Total time (in seconds) spent in the session (sum of administrative, informational, and product-related page durations); strictly positive.",
+  "TimeThreshold",    "Row-specific censoring threshold (seconds); each value drawn independently from a uniform distribution on [10, 1800].",
+  "CensorTime",       "Observed time (seconds) after censoring: equals TotalDuration if TotalDuration < TimeThreshold, otherwise equals TimeThreshold.",
+  "Censor",           "Censoring indicator: 1 if TotalDuration >= TimeThreshold (censored), 0 otherwise (fully observed)."
+)
+
+final_categorical <- tibble::tribble(
+  ~Variable,         ~Description,
+  "Month",            "Month of the visit (e.g., \"Feb\", \"Mar\", \"May\").",
+  "OperatingSystems", "Encoded identifier of the visitor's operating system.",
+  "Browser",          "Encoded identifier of the visitor's web browser.",
+  "Region",           "Encoded geographic region from which the session was started.",
+  "TrafficType",      "Encoded traffic source indicating how the visitor arrived at the site (e.g., direct, referral, ad campaign).",
+  "VisitorType",      "Visitor type; typically \"New_Visitor\", \"Returning_Visitor\", or \"Other\".",
+  "Weekend",          "Logical; TRUE if the session took place on a weekend, FALSE otherwise.",
+  "Revenue",          "Logical; TRUE if the session ended with a transaction (purchase), FALSE otherwise."
+)
+
+nice_var_table(final_continuous, caption = "Final dataset: continuous and count variables",
+               var_width = "3.2cm", desc_width = "11.5cm")
+nice_var_table(final_categorical, caption = "Final dataset: categorical variables",
+               var_width = "3.2cm", desc_width = "11.5cm")
+```
+
+```{r final_data_glimpse, message = FALSE}
+shopping_final <- read_csv(file.path(work_dir, "shopping", "data", "final_data", 
+                                     "shopping_data_final.csv"),
+                           show_col_types = FALSE)
+glimpse(shopping_final)
+```
+
+---
+
+# Appendix
+
+Detailed descriptions of each dataset in the pipeline are given below.
+
+## A. Relationship between datasets and code files
+
+- **Exploratory data analysis and variable explanations** for the raw UCI dataset are in `shopping/code/00_uci_EDA.Rmd`.  
+- **Creation of `01_uci_preprocessed.csv`** is handled by `shopping/code/01_uci_data_preprocessing.R`, which:
+  - Reads `uci_shopping.csv`.
+  - Sums duration variables into `TotalDuration`.
+  - Drops zero–total-duration sessions.
+  - Writes the result to `01_uci_preprocessed.csv`.
+- **Creation of `02_uci_random_censor.csv` and `shopping_data_final.csv`** is handled by `shopping/code/02_uci_censor_random_time.R`, which:
+  - Reads `01_uci_preprocessed.csv`.
+  - Draws **row-specific** `TimeThreshold` values from \([10, 1800]\) seconds.
+  - Creates `CensorTime` and `Censor` for each row.
+  - Writes the result to `02_uci_random_censor.csv` (intermediate) and to 
+  \
+  `shopping/data/final_data/shopping_data_final.csv` (final, analysis-ready).
+
+Together, these files document the full pipeline from the original UCI Online Shoppers Purchasing Intention data to the final dataset used for subsequent analysis.
+
+## B. Raw UCI dataset: `uci_shopping.csv`
 
 **File path**: `shopping/data/raw_data/uci_shopping.csv`  
 **Source**: UCI Machine Learning Repository, Online Shoppers Purchasing Intention Data Set (ID 468).
@@ -117,7 +192,7 @@ nice_var_table(raw_categorical, caption = "Raw UCI categorical variables")
 
 ---
 
-## 2. Preprocessed UCI dataset: `01_uci_preprocessed.csv`
+## C. Preprocessed UCI dataset: `01_uci_preprocessed.csv`
 
 **File path**: `shopping/data/intermediate_data/01_uci_preprocessed.csv`  
 **Generating code**: `shopping/code/01_uci_data_preprocessing.R`
@@ -177,102 +252,16 @@ glimpse(uci_pre)
 
 ---
 
-## 3. Uniformly censored UCI dataset: `02_uci_uniform_censor.csv`
+## D. Randomly censored UCI dataset: `02_uci_random_censor.csv`
 
-**File path**: `shopping/data/intermediate_data/02_uci_uniform_censor.csv`  
-**Generating code**: `shopping/code/02_uci_censor_uniform_time.R`
+**File path**: `shopping/data/intermediate_data/02_uci_random_censor.csv`  
+**Generating code**: `shopping/code/02_uci_censor_random_time.R`
 
-### How `02_uci_uniform_censor.csv` is created
+The same script also writes the analysis-ready copy to `shopping/data/final_data/shopping_data_final.csv`.
 
-Key steps from `02_uci_censor_uniform_time.R`:
+### How `02_uci_random_censor.csv` is created
 
-```{r, eval = FALSE}
-library(tidyverse)
-library(here)
-
-work_dir <- here()
-uci_data <- read_csv(file.path(work_dir, "shopping", "data", "intermediate_data",
-                               "01_uci_preprocessed.csv"))
-
-# Introducing censorship with a single uniform time threshold
-set.seed(123)
-time_threshold <- runif(1, min = 10, max = 1800)  # between 10 seconds and 30 minutes
-
-uci_transformed <- uci_data %>%
-  mutate(
-    TimeThreshold = time_threshold,
-    CensorTime   = ifelse(TotalDuration >= time_threshold,
-                          time_threshold,
-                          TotalDuration),
-    Censor       = ifelse(TotalDuration >= time_threshold, 1, 0)
-  )
-
-write.csv(uci_transformed,
-          file.path(work_dir, "shopping", "data", "intermediate_data",
-                    "02_uci_uniform_censor.csv"),
-          row.names = FALSE)
-```
-
-
-### New variables in `02_uci_uniform_censor.csv`
-
-Starting from `01_uci_preprocessed.csv`, this dataset adds three new variables:
-
-- **`TimeThreshold`**:
-  - A scalar threshold (same value for all observations).
-  - Drawn from a continuous uniform distribution on \([10, 1800]\) seconds.
-  - Represents a global censoring time.
-
-- **`CensorTime`**:
-  - The observed time after applying censoring:
-    \[
-    \text{CensorTime} =
-      \begin{cases}
-        \text{TotalDuration}, & \text{if } \text{TotalDuration} < \text{TimeThreshold}, \\
-        \text{TimeThreshold}, & \text{if } \text{TotalDuration} \ge \text{TimeThreshold}.
-      \end{cases}
-    \]
-
-- **`Censor`**:
-  - Indicator of whether an observation is censored at `TimeThreshold`:
-    - `1` if `TotalDuration >= TimeThreshold` (censored).
-    - `0` otherwise (fully observed).
-
-```{r uci_uniform_censor_variable_table, echo = FALSE}
-uniform_censor_vars <- tibble::tribble(
-  ~Variable,       ~Description,
-  "TimeThreshold", "Scalar censoring threshold (same value for all observations), drawn from a continuous uniform distribution on [10, 1800] seconds; represents a global censoring time.",
-  "CensorTime",    "Observed time after applying censoring: equals TotalDuration if TotalDuration < TimeThreshold, otherwise equals TimeThreshold.",
-  "Censor",        "Censoring indicator: 1 if TotalDuration >= TimeThreshold (censored at the threshold), 0 otherwise."
-)
-
-nice_var_table(
-  uniform_censor_vars,
-  caption = "Additional variables in the uniformly censored UCI dataset",
-  var_width = "4cm",
-  desc_width = "11cm"
-)
-```
-
-All other variables from `01_uci_preprocessed.csv` are preserved unchanged.
-
-```{r, message = FALSE}
-uci_uniform <- read_csv(file.path(work_dir, "shopping", "data", "intermediate_data",
-                                  "02_uci_uniform_censor.csv"),
-                        show_col_types = FALSE)
-glimpse(uci_uniform)
-```
-
----
-
-## 4. Randomly censored UCI dataset: `03_uci_random_censor.csv`
-
-**File path**: `shopping/data/intermediate_data/03_uci_random_censor.csv`  
-**Generating code**: `shopping/code/03_uci_censor_random_time.R`
-
-### How `03_uci_random_censor.csv` is created
-
-Key steps from `03_uci_censor_random_time.R`:
+Key steps from `02_uci_censor_random_time.R`:
 
 ```{r, eval = FALSE}
 library(tidyverse)
@@ -297,11 +286,15 @@ uci_transformed <- uci_data %>%
 
 write.csv(uci_transformed,
           file.path(work_dir, "shopping", "data", "intermediate_data",
-                    "03_uci_random_censor.csv"),
+                    "02_uci_random_censor.csv"),
+          row.names = FALSE)
+write.csv(uci_transformed,
+          file.path(work_dir, "shopping", "data", "final_data",
+                    "shopping_data_final.csv"),
           row.names = FALSE)
 ```
 
-### New variables in `03_uci_random_censor.csv`
+### New variables in `02_uci_random_censor.csv`
 
 Relative to `01_uci_preprocessed.csv`, the same three censoring variables are added as in the uniform case, but with **observation-specific** thresholds:
 
@@ -344,31 +337,7 @@ All other variables (from `01_uci_preprocessed.csv`) remain unchanged.
 
 ```{r, message = FALSE}
 uci_random <- read_csv(file.path(work_dir, "shopping", "data", "intermediate_data",
-                                 "03_uci_random_censor.csv"),
+                                 "02_uci_random_censor.csv"),
                        show_col_types = FALSE)
 glimpse(uci_random)
 ```
-
----
-
-## 5. Relationship between datasets and code files
-
-- **Exploratory data analysis and variable explanations** for the raw UCI dataset are in `shopping/code/00_uci_EDA.Rmd`.  
-- **Creation of `01_uci_preprocessed.csv`** is handled by `shopping/code/01_uci_data_preprocessing.R`, which:
-  - Reads `uci_shopping.csv`.
-  - Sums duration variables into `TotalDuration`.
-  - Drops zero–total-duration sessions.
-  - Writes the result to `01_uci_preprocessed.csv`.
-- **Creation of `02_uci_uniform_censor.csv`** is handled by `shopping/code/02_uci_censor_uniform_time.R`, which:
-  - Reads `01_uci_preprocessed.csv`.
-  - Draws a **single** `TimeThreshold` from \([10, 1800]\) seconds.
-  - Creates `CensorTime` and `Censor` based on that threshold.
-  - Writes the result to `02_uci_uniform_censor.csv`.
-- **Creation of `03_uci_random_censor.csv`** is handled by `shopping/code/03_uci_censor_random_time.R`, which:
-  - Reads `01_uci_preprocessed.csv`.
-  - Draws **row-specific** `TimeThreshold` values from \([10, 1800]\) seconds.
-  - Creates `CensorTime` and `Censor` for each row.
-  - Writes the result to `03_uci_random_censor.csv`.
-
-Together, these files document the full pipeline from the original UCI Online Shoppers Purchasing Intention data to the censored datasets used for subsequent analysis.
-

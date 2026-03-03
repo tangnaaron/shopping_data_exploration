@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.24)  24 FEB 2026 23:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.24)  3 MAR 2026 15:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -457,6 +457,9 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count336
 ) (./uci_data_documentation.aux
 
+LaTeX Warning: Label `tab:final_data_variable_tables' multiply defined.
+
+
 LaTeX Warning: Label `tab:raw_uci_variable_tables' multiply defined.
 
 )
@@ -560,69 +563,70 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 14
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 176.
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 184.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 175.
 [1
 
 {/Users/aarontang/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-Overfull \hbox (9.48906pt too wide) in alignment at lines 220--225
- [] [] 
- []
-
-
-Overfull \hbox (9.48906pt too wide) in alignment at lines 225--230
- [] [] 
- []
-
-
-Overfull \hbox (9.48906pt too wide) in alignment at lines 230--232
- [] [] 
- []
-
-
-Overfull \hbox (9.48906pt too wide) in alignment at lines 232--234
- [] [] 
- []
-
-
-Overfull \hbox (9.48906pt too wide) in alignment at lines 234--246
- [] [] 
- []
-
-[2] [3] [4]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 436.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 436.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 436.
-[5{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [6]
-Underfull \hbox (badness 1062) in paragraph at lines 699--702
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 260.
+[2]
+Underfull \hbox (badness 1062) in paragraph at lines 303--306
 []\T1/lmr/bx/n/10 Exploratory data anal-y-sis and vari-able ex-pla-na-tions \T1/lmr/m/n/10 for the raw UCI dataset are in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 699--702
+Underfull \hbox (badness 10000) in paragraph at lines 303--306
 
  []
 
-[7]
-Overfull \hbox (13.93027pt too wide) in paragraph at lines 702--704
+
+Overfull \hbox (13.93027pt too wide) in paragraph at lines 306--308
 []\T1/lmr/bx/n/10 Creation of \T1/lmtt/b/n/10 01_uci_preprocessed.csv \T1/lmr/m/n/10 is han-dled by \T1/lmtt/m/n/10 shopping/code/01_uci_data_preprocessing.R\T1/lmr/m/n/10 ,
  []
 
 
-Overfull \hbox (29.68022pt too wide) in paragraph at lines 717--719
-[]\T1/lmr/bx/n/10 Creation of \T1/lmtt/b/n/10 02_uci_uniform_censor.csv \T1/lmr/m/n/10 is han-dled by \T1/lmtt/m/n/10 shopping/code/02_uci_censor_uniform_time.R\T1/lmr/m/n/10 ,
+Underfull \hbox (badness 5592) in paragraph at lines 322--324
+[]\T1/lmr/bx/n/10 Creation of \T1/lmtt/b/n/10 02_uci_random_censor.csv \T1/lmr/bx/n/10 and \T1/lmtt/b/n/10 shopping_data_final.csv \T1/lmr/m/n/10 is han-dled by
+ []
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 331.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 331.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 331.
+[3{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]
+Overfull \hbox (9.48906pt too wide) in alignment at lines 391--396
+ [] [] 
  []
 
 
-Overfull \hbox (19.18025pt too wide) in paragraph at lines 734--736
-[]\T1/lmr/bx/n/10 Creation of \T1/lmtt/b/n/10 03_uci_random_censor.csv \T1/lmr/m/n/10 is han-dled by \T1/lmtt/m/n/10 shopping/code/03_uci_censor_random_time.R\T1/lmr/m/n/10 ,
+Overfull \hbox (9.48906pt too wide) in alignment at lines 396--401
+ [] [] 
  []
 
-[8] (./uci_data_documentation.aux)
+
+Overfull \hbox (9.48906pt too wide) in alignment at lines 401--403
+ [] [] 
+ []
+
+
+Overfull \hbox (9.48906pt too wide) in alignment at lines 403--405
+ [] [] 
+ []
+
+
+Overfull \hbox (9.48906pt too wide) in alignment at lines 405--417
+ [] [] 
+ []
+
+ignored error: Infinite glue shrinkage found in box being split [4]
+ignored error: Infinite glue shrinkage found in box being split [5]
+Overfull \hbox (15.99467pt too wide) in paragraph at lines 556--558
+[]\T1/lmr/m/n/10 The same script also writes the analysis-ready copy to \T1/lmtt/m/n/10 shopping/data/final_data/shopping_data_final.csv\T1/lmr/m/n/10 . 
+ []
+
+[6] [7{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/Users/aarontang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [8] (./uci_data_documentation.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -632,18 +636,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13341 strings out of 469514
- 206627 string characters out of 5468746
- 641327 words of memory out of 5000000
- 41721 multiletter control sequences out of 15000+600000
+ 13343 strings out of 469514
+ 206574 string characters out of 5468746
+ 644104 words of memory out of 5000000
+ 41722 multiletter control sequences out of 15000+600000
  688743 words of font info for 89 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 89i,10n,93p,786b,634s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on uci_data_documentation.pdf (8 pages, 258697 bytes).
+ 89i,10n,93p,769b,634s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/aarontang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on uci_data_documentation.pdf (8 pages, 272933 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 141 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
+ 185 PDF objects out of 1000 (max. 8388607)
+ 145 compressed objects within 2 object streams
+ 28 named destinations out of 1000 (max. 500000)
  105 words of extra memory for PDF output out of 10000 (max. 10000000)
 
