@@ -5,8 +5,7 @@ This project documents and builds an **analysis-ready** dataset derived from the
 ## Project structure
 
 - **Documentation**
-  - `shopping/uci_data_documentation.Rmd`: dataset documentation (final dataset first; detailed dataset notes in the Appendix)
-  - `shopping/uci_data_documentation.pdf`: rendered PDF output (if already knitted)
+  - Link: https://github.com/tangnaaron/shopping_data_exploration/blob/main/shopping/uci_data_documentation.pdf
 - **Code**
   - `shopping/code/00_uci_EDA.Rmd`: exploratory analysis / variable explanations for the raw UCI data
   - `shopping/code/01_uci_data_preprocessing.R`: creates the preprocessed dataset
