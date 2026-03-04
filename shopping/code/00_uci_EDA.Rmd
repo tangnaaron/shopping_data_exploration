@@ -222,7 +222,7 @@ ggplot(data = shopping_uci_total_durations, mapping = aes(x = Revenue, y = Total
 ```{r}
 # Read preprocessed data
 uci_transformed <- read_csv(file.path(work_dir, "shopping", "data", "intermediate_data",
-                                      "01_uci_preprocessed.csv"))
+                                      "02_uci_random_censor.csv"))
 
 head(uci_transformed)
 ```
